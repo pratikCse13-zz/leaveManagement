@@ -1,0 +1,104 @@
+<div class="container-fluid">  
+  <div class="row">
+      <div class="col s1">
+      </div>
+      <div class="col s4 valign-wrapper" style="padding-top: 80px">
+        <div class="card medium hoverable" style="width: 100%; padding: 5px">
+          <div class="card-content">
+            <div class="class-title">
+                <h3 style="color: teal">Manager</h3>
+            </div>
+            <div class="input-field">
+              <input id="emailId" type="email" class="validate" ng-model="managerEmailId">
+              <label for="emailId" data-error="invalid email id">Email Id</label>
+            </div>
+            <div class="input-field">
+              <input id="password" type="password" class="validate" ng-model="managerPassword">
+              <label for="password">Password</label>
+            </div>
+            <div class="row" style="margin-top: 20px">
+              <button class="waves-effect waves-light btn col s5" ng-click="loginToManager()">Login</button>
+              <div class="col s2"></div>
+              <button class="activator waves-effect waves-light btn col s5">Sign up</button>
+            </div>  
+            <div class="alert" ng-show="showErrorManager" style="color: red; font-size: 0.9em">
+                {{ errorManager }}
+            </div>
+          </div>
+          <div class="card-reveal">
+            <span class="card-title grey-text text-darken-4">Sign Up<i class="material-icons right">close</i></span>
+            <div class="input-field">
+              <input id="Name" type="text" class="validate" ng-model="newManagerName">
+              <label for="Name">Name</label>
+            </div>
+            <div class="input-field">
+              <input id="emailId" type="email" class="validate" ng-model="newManagerEmailId">
+              <label for="emailId">Email Id</label>
+            </div>
+            <div class="input-field">
+              <input id="password" type="password" class="validate" ng-model="newManagerPassword">
+              <label for="password">Password</label>
+            </div>
+            <div>
+              <button class="waves-effect waves-light btn" ng-click="signupToManager()">Sign Up</button>
+            </div>
+            <div class="alert" ng-show="showErrorNewManager" style="color: red; font-size: 0.9em; margin-top: 10px">
+                {{ errorNewManager }}
+            </div>
+          </div>
+        </div>
+      </div>  
+      <div class="col s1">
+      </div>
+      <div class="col s1">
+      </div>
+      <div class="col s4 valign-wrapper" style="padding-top: 80px">
+        <div class="card medium hoverable" style="width: 100%; padding: 5px">
+          <div class="card-content">
+            <div class="class-title">
+                <h3 style="color: teal">Employee</h3>
+            </div>
+            <div class="input-field">
+              <input id="emailId" type="email" class="validate" ng-model="employeeEmailId">
+              <label for="emailId" data-error="invalid email id">Email Id</label>
+            </div>
+            <div class="input-field">
+              <input id="password" type="password" class="validate" ng-model="employeePassword">
+              <label for="password">Password</label>
+            </div>
+            <div class="row" style="margin-top: 20px">
+              <button class="waves-effect waves-light btn col s5" ng-click="loginToEmployee()">Login</button>
+              <div class="col s2"></div>
+              <button class="activator waves-effect waves-light btn col s5">Sign up</button>
+            </div>  
+            <div class="alert" ng-show="showErrorEmployee" style="color: red; font-size: 0.9em">
+                {{ errorEmployee }}
+            </div>
+          </div>
+          <div class="card-reveal">
+            <span class="card-title grey-text text-darken-4">Sign Up<i class="material-icons right">close</i></span>
+            <div class="input-field">
+              <input id="Name" type="text" class="validate" ng-model="newEmployeeName">
+              <label for="Name">Name</label>
+            </div>
+            <div class="input-field">
+              <input id="emailId" type="email" class="validate" ng-model="newEmployeeEmailId">
+              <label for="emailId" data-error="invalid email id">Email Id</label>
+            </div>
+            <div class="input-field">
+              <input id="password" type="password" class="validate" ng-model="newEmployeePassword">
+              <label for="password">Password</label>
+            </div>
+            <div>
+              <button class="waves-effect waves-light btn" ng-click="signupToEmployee()">Sign Up</button>
+            </div>
+            <div class="alert" ng-show="showErrorNewEmployee" style="color: red; font-size: 0.9em; margin-top: 10px">
+                {{ errorNewEmployee }}
+            </div>
+          </div>
+        </div>
+      </div> 
+      <div class="col s1">
+      </div>
+  </div>  
+</div>  

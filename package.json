@@ -1,0 +1,23 @@
+{
+  "name": "leavemanagement",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "pratik",
+  "license": "ISC",
+  "dependencies": {
+    "angular-materializecss-datepicker": "^0.1.2",
+    "bcryptjs": "^2.3.0",
+    "body-parser": "^1.15.2",
+    "bower": "^1.7.9",
+    "express": "^4.14.0",
+    "express-validator": "^2.21.0",
+    "jwt-simple": "^0.5.0",
+    "moment": "^2.15.2",
+    "moment-weekend": "^1.0.1",
+    "mongoose": "^4.6.4"
+  }
+}

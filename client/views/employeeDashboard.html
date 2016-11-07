@@ -1,0 +1,161 @@
+<nav>
+    <div class="nav-wrapper">
+		<a href="#" class="brand-logo" style="margin-left: 150px">Logo</a>
+		<ul class="right hide-on-med-and-down" style="margin-right: 150px">
+		    <li><a href="sass.html">Hi {{name}}</a></li>
+		    <li><a href="badges.html">|</a></li>
+		    <li><button class="waves-effect waves-light btn" ng-click="logout()">Logout</button></li>
+      	</ul>
+    </div>
+</nav>
+
+<div class="container-fluid" style="height: 100%; width: 100%" ng-init="initialize()">
+	<div class="row" style="height: 500px; width: 100%">
+		<div class="col s3" style="padding: 10px">
+			<div class="row">
+				<div class="col s12">
+					<div class="card" style="min-height: 100px; width: 100%; padding: 5px">
+				     	<div class="card-title">
+			         		<b>Applied leaves</b>
+			         	</div>
+			         	<div class="card-content" style="padding: 5px">
+			            	<div class="card horizontal hoverable" ng-repeat="leave in appliedLeaves">
+						        <div class="card-content">
+						          <div class="row">
+						          	<div class="col s4">
+						          		<label>start date:</label><br>
+						          		<label><b>{{leave.start}}</b></label>
+						          	</div>
+						          	<div class="col s4">
+						          		<label>end date:</label><br>
+						          		<label><b>{{leave.end}}</b></label>
+						          	</div>
+						          	<div class="col s4">
+						          		<label>reason:</label><br>
+						          		<label><b>{{leave.reason}}</b></label>
+						          	</div>	
+						          </div>
+						        </div>
+						    </div>
+						</div>
+					</div>
+				</div>
+				<div class="col s12">
+					<div class="card" style="min-height: 100px; width: 100%; padding: 5px">
+				     	<div class="card-title">
+			         		<b>Approved leaves</b>
+			         	</div>
+			         	<div class="card-content" style="padding: 5px">
+			            	<div class="card horizontal hoverable" ng-repeat="leave in approvedLeaves">
+						        <div class="card-content">
+						          <div class="row">
+						          	<div class="col s4">
+						          		<label>start date:</label><br>
+						          		<label><b>{{leave.start}}</b></label>
+						          	</div>
+						          	<div class="col s4">
+						          		<label>end date:</label><br>
+						          		<label><b>{{leave.end}}</b></label>
+						          	</div>
+						          	<div class="col s4">
+						          		<label>applied by:</label><br>
+						          		<label><b>{{leave.reason}}</b></label>
+						          	</div>	
+						          </div>
+						        </div>
+						    </div>
+						</div>
+					</div>
+				</div>
+				<div class="col s12">
+					<div class="card" style="min-height: 100px; width: 100%; padding: 5px">
+				     	<div class="card-title">
+			         		<b>Declined leaves</b>
+			         	</div>
+			         	<div class="card-content" style="padding: 5px">
+			            	<div class="card horizontal hoverable" ng-repeat="leave in declinedLeaves">
+						        <div class="card-content">
+						          <div class="row">
+						          	<div class="col s4">
+						          		<label>start date:</label><br>
+						          		<label><b>{{leave.start}}</b></label>
+						          	</div>
+						          	<div class="col s4">
+						          		<label>end date:</label><br>
+						          		<label><b>{{leave.end}}</b></label>
+						          	</div>
+						          	<div class="col s4">
+						          		<label>applied by:</label><br>
+						          		<label><b>{{leave.reason}}</b></label>
+						          	</div>	
+						          </div>
+						        </div>
+						    </div>
+						</div>
+					</div>
+				</div>
+			</div>		
+		</div>
+		<div class="col s6" style="padding: 10px">
+			<div class="card" style="min-height: 400px; width: 100%; padding: 5px">
+		     	<div class="card-title">
+	         		<b>Apply for leave</b>
+	         	</div>
+	         	<div class="card-content" style="padding: 5px; margin-top: 40px">
+	            	<div class="row">
+	            		<div class="col s6">
+	            			<label for="Start Date">Start Date</label>
+				            <input id="Start Date" type="date" class="datepicker" ng-model="startDate" ng-change="changeStartDate(startDate)">
+		              	</div>
+	            		<div class="col s6">
+	            			<label for="End Date">End Date</label>
+				            <input id="End Date" type="date" class="datepicker" ng-model="employeeController.endDate" materialize-date-picker readonly >
+		              	</div>
+	            	</div>
+	            	<div class="row">
+	            		<div class="col s12">
+	            			<div class="input-field">
+				              <input id="Reason" type="text" class="validate" ng-model="reason">
+				              <label for="Reason">Reason</label>
+				            </div>
+	            		</div>
+	            	</div>
+	            	<div class="row">
+		            	<div class="col s6">
+						    <label>Apply to</label>
+						    <select ng-model="selectedManager" ng-options="manager.name for manager in managers track by manager.id" ng-change="changeManager(selectedManager)" ng-if="managers">
+						    </select>	  	
+		            	</div>
+		            	<div class="col s6">
+	            			<button class="waves-effect waves-light btn" style="margin-top: 20px; margin-left: 30px" ng-click="apply()">Apply for leave</button>
+						</div>
+					</div>	
+				</div>
+			</div>
+		</div>
+		<div class="col s3" style="padding: 10px">
+			<div class="card" style="padding: 5px">
+				<div class="card-title">
+	         		<b>Holidays</b>
+	         	</div>
+				<div class="card-content">
+					<div class="card horizontal hoverable" ng-repeat="holiday in holidays">
+				        <div class="card-content">
+				        	<div class="row">
+					          	<div class="col s6">
+					          		<label>Date:</label><br>
+					          		<label><b>{{holiday.day}}</b></label>
+					          	</div>
+					          	<div class="col s6">
+					          		<label>Occassion:</label><br>
+					          		<label><b>{{holiday.occassion}}</b></label>
+					          	</div>	
+				        	</div>
+				        </div>
+					</div>	
+				</div>
+			</div>
+		</div>	
+	</div>
+</div>
+	
