@@ -105,11 +105,12 @@
 	            	<div class="row">
 	            		<div class="col s6">
 	            			<label for="Start Date">Start Date</label>
-				            <input id="Start Date" type="date" class="datepicker" ng-model="startDate" ng-change="changeStartDate(startDate)">
-		              	</div>
+				            <input input-date id="Start Date" type="text" class="datepicker" 
+				            ng-model="startDate"/>
+				        </div>
 	            		<div class="col s6">
 	            			<label for="End Date">End Date</label>
-				            <input id="End Date" type="date" class="datepicker" ng-model="employeeController.endDate" materialize-date-picker readonly >
+				            <input input-date id="End Date" type="text" class="datepicker" ng-model="endDate"/>
 		              	</div>
 	            	</div>
 	            	<div class="row">
@@ -123,13 +124,19 @@
 	            	<div class="row">
 		            	<div class="col s6">
 						    <label>Apply to</label>
-						    <select ng-model="selectedManager" ng-options="manager.name for manager in managers track by manager.id" ng-change="changeManager(selectedManager)" ng-if="managers">
-						    </select>	  	
+						    <div input-field>
+							    <select ng-model="selectedManagerId" ng-change="changeManager(selectedManagerId)" material-select watch>
+							        <option ng-repeat="manager in managers" value="{{manager.id}}">{{manager.name}}</option>
+							    </select>
+							</div>	  	
 		            	</div>
 		            	<div class="col s6">
 	            			<button class="waves-effect waves-light btn" style="margin-top: 20px; margin-left: 30px" ng-click="apply()">Apply for leave</button>
 						</div>
 					</div>	
+					<div class="alert" ng-show="showError" style="color: red; font-size: 0.9em">
+                		{{ error }}
+            		</div>
 				</div>
 			</div>
 		</div>

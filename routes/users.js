@@ -213,9 +213,7 @@ var checkTokenManager = function(req,res,next){
 var checkTokenEmployee = function(req,res,next){
 		var token = req.body.token;
 		var tokenUser = jwt.decode(token,JWT_SECRET);
-		console.log(tokenUser);
 		employeeSchema.findOne({emailId:tokenUser.emailId}).exec(function(err,employee){
-			console.log(employee);
 			if(err)
 			{
 					res.status(300);
@@ -273,7 +271,8 @@ router.post('/loginManager',function(req,res){
 						{
 							if(response)
 							{
-								var token = jwt.encode(user,JWT_SECRET);
+								var payload = {name: user.name, emailId: user.emailId};
+								var token = jwt.encode(payload,JWT_SECRET);
 								res.json({msg:"login successful",token:token});
 							}
 							else
@@ -312,7 +311,8 @@ router.post('/loginEmployee',function(req,res){
 						{
 							if(response)
 							{
-								var token = jwt.encode(user,JWT_SECRET);
+								var payload = {name: user.name, emailId: user.emailId};
+								var token = jwt.encode(payload,JWT_SECRET);
 								res.json({msg:"login successful",token:token});
 							}
 							else
@@ -331,7 +331,8 @@ router.post('/getManager',checkTokenManager,function(req,res){
 	var managerInfo = {
 		name: app.locals.authenticated.name,
 		pendingLeaves: app.locals.authenticated.pendingLeaves,
-		approvedLeaves: app.locals.authenticated.approvedLeaves
+		approvedLeaves: app.locals.authenticated.approvedLeaves,
+		id: app.locals.authenticated._id
 	};
 	res.json(managerInfo);	
 });

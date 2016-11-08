@@ -1,7 +1,7 @@
-var app=angular.module('leaveApp',['ui.router','ngCookies','angularMaterializeDatePicker'])
-               .directive('select', materialSelect);
+var app=angular.module('leaveApp',['ui.router','ngCookies','ui.materialize']);
+               //.directive('select', materialSelect);
 
-materialSelect.$inject = ['$timeout'];
+/*materialSelect.$inject = ['$timeout'];
 
 function materialSelect($timeout){
     var directive = {
@@ -43,7 +43,7 @@ function materialSelect($timeout){
     }
 
     return directive;
-}
+}*/
 
 app.config(function($stateProvider, $urlRouterProvider) {
     
@@ -159,28 +159,77 @@ app.controller('managerController',['$scope','$cookies','$http','$state',functio
     $scope.pendingLeaves = [];
     $scope.approvedLeaves = [];
     $scope.name = '';
+    $scope.holidayDate = '';
+    $scope.holidayOccassion = '';
+    $scope.managerId = '';
+
     $scope.logout = function(){
         $state.go('/');
         $cookies.remove('user');
     };
 
-    $scope.load = function(){
+    /*$scope.load = function(){
         $('.datepicker').pickadate({
             selectMonths: true, // Creates a dropdown to control month
             selectYears: 15 // Creates a dropdown of 15 years to control year
         });
-    };
+    };*/
 
     $scope.initialize = function(){
         var token = $cookies.get('user');
         $http.post('/users/getManager',{token: token}).then(function(res){
-            $scope.pendingLeaves = res.data.pendingLeaves;
-            $scope.approvedLeaves = res.data.approvedLeaves;
+            for(var i=0;i<res.data.pendingLeaves.length;i++)
+            {
+                var leave = res.data.pendingLeaves[i];
+                leave.start = res.data.pendingLeaves[i].start.substring(0,10);
+                leave.end = res.data.pendingLeaves[i].end.substring(0,10);
+                $scope.pendingLeaves.push(leave);
+            }
+            for(var i=0;i<res.data.approvedLeaves.length;i++)
+            {
+                var leave = res.data.approvedLeaves[i];
+                leave.start = res.data.approvedLeaves[i].start.substring(0,10);
+                leave.end = res.data.approvedLeaves[i].end.substring(0,10);
+                $scope.approvedLeaves.push(leave);
+            }
             $scope.name = res.data.name;
+            $scope.managerId = res.data.id;
         });
     };
 
-    $scope.load();
+    $scope.approveLeave = function(leave){
+        $scope.approvedLeaves.push(leave);
+        $scope.pendingLeaves.splice($scope.pendingLeaves.indexOf(leave),1); 
+        $http.post('/approveLeave',{manager: leave.manager, employee: leave.employee, leave: leave}).then(function(res){
+
+        });
+    };
+
+    $scope.denyLeave = function(leave){
+        $scope.pendingLeaves.splice($scope.pendingLeaves.indexOf(leave),1);
+        $http.post('/declineLeave',{manager: leave.manager, employee: leave.employee, leave: leave}).then(function(res){
+
+        });  
+    };
+    $scope.addHoliday = function(value){
+        var day = new Date($scope.holidayDate);
+        var holidayDay = day.getDate();
+        if(holidayDay<10)
+        {
+            console.log('0 to day added');
+            holidayDay = '0'+holidayDay;
+        }
+        var holidayMonth = day.getMonth()+1;
+        if(holidayMonth<10)
+        {
+            console.log('0 to month added');
+            holidayMonth = '0'+holidayMonth;
+        }
+        $http.post('/addHoliday',{date: holidayDay, month: holidayMonth, occassion: $scope.holidayOccassion}).then(function(res){
+
+        });
+    };
+    // $scope.load();
 }]);
 
 app.controller('employeeController',['$scope','$cookies','$http','$state',function($scope,$cookies,$http,$state){
@@ -190,10 +239,17 @@ app.controller('employeeController',['$scope','$cookies','$http','$state',functi
     $scope.declinedLeaves = [];
     $scope.holidays = [];
     $scope.managers = null;
-    $scope.selectedManager;
-    $scope.startDate;
-    $scope.endDate;
+    $scope.selectedManagerId;
+    $scope.startDate = '';
+    $scope.endDate = '';
     $scope.reason = '';
+    $scope.error= '';
+    $scope.employeeId = '';
+    $scope.showError = false;
+
+    $scope.changeManager = function(managerId){
+        $scope.selectedManagerId = managerId;
+    };
 
     $scope.load = function(){
         $('select').material_select();
@@ -206,24 +262,34 @@ app.controller('employeeController',['$scope','$cookies','$http','$state',functi
     $scope.logout = function(){
         $state.go('/');
         $cookies.remove('user');
-    };
-
-    $scope.changeManager = function(manager){
-        $scope.selectedManager = manager;
-    };
-
-    $scope.changeStartDate = function(startDate){
-        console.log(startDate);
-        $scope.startDate = startDate;
-    };
+    };  
 
     $scope.initialize = function(){
         var token = $cookies.get('user');
         $http.post('/users/getEmployee',{token: token}).then(function(res){
-            $scope.appliedLeaves = res.data.pendingLeaves;
-            $scope.approvedLeaves = res.data.approvedLeaves;
-            $scope.declinedLeaves = res.data.declinedLeaves;
+            for(var i=0;i<res.data.appliedLeaves.length;i++)
+            {
+                var leave = res.data.appliedLeaves[i];
+                leave.start = res.data.appliedLeaves[i].start.substring(0,10);
+                leave.end = res.data.appliedLeaves[i].end.substring(0,10);
+                $scope.appliedLeaves.push(leave);
+            }
+            for(var i=0;i<res.data.approvedLeaves.length;i++)
+            {
+                var leave = res.data.approvedLeaves[i];
+                leave.start = res.data.approvedLeaves[i].start.substring(0,10);
+                leave.end = res.data.approvedLeaves[i].end.substring(0,10);
+                $scope.approvedLeaves.push(leave);
+            }
+            for(var i=0;i<res.data.declinedLeaves.length;i++)
+            {
+                var leave = res.data.declinedLeaves[i];
+                leave.start = res.data.declinedLeaves[i].start.substring(0,10);
+                leave.end = res.data.declinedLeaves[i].end.substring(0,10);
+                $scope.declinedLeaves.push(leave);
+            }
             $scope.name = res.data.name;
+            $scope.employeeId = res.data.id;
         });
 
         $http.get('/getHolidays').then(function(res){
@@ -231,16 +297,45 @@ app.controller('employeeController',['$scope','$cookies','$http','$state',functi
         });
 
         $http.get('/users/getManagers').then(function(res){
-            console.log(res.data.managers);
             $scope.managers = res.data.managers;
         });
     };
 
     $scope.apply = function(){
-        console.log($scope.selectedManager);
-        console.log($scope.startDate);
-        console.log($scope.endDate);
-        console.log($scope.reason);
+        var a = moment($scope.startDate);
+        var b = moment($scope.endDate);
+        var diffDays = b.diff(a, 'days')+1;
+        if(diffDays>15)
+        {
+            $scope.error = 'the leave period cannot be more than 15 days';
+            $scope.showError = true;
+        }
+        else
+        {    
+            if(diffDays<=0)
+            {
+                $scope.error = 'the leave period is not valid';
+                $scope.showError = true;   
+            }
+            else
+            {   
+                $scope.showError = false;    
+                var leave = {
+                    startDate: $scope.startDate,
+                    endDate: $scope.endDate,
+                    employeeId: $scope.employeeId,
+                    managerId: $scope.selectedManagerId,
+                    employeeName: $scope.name,
+                    reason: $scope.reason
+                };
+                $http.post('/requestLeave',leave).then(function(res){
+                    var leave = res.data;
+                    leave.start = res.data.start.substring(0,10);
+                    leave.end = res.data.end.substring(0,10);
+                    $scope.appliedLeaves.push(leave);
+                });
+            }    
+        }    
     };
 
     $scope.load();

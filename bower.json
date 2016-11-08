@@ -15,6 +15,9 @@
     "tests"
   ],
   "dependencies": {
-    "angular-materializecss-datepicker": "^0.1.2"
+    "angular-materializecss-datepicker": "^0.1.2",
+    "angular-material": "^1.1.1",
+    "moment": "^2.15.2",
+    "angular": "^1.5.8"
   }
 }

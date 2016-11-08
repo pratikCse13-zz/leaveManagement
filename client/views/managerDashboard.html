@@ -60,11 +60,11 @@
 				          		<label><b>{{leave.employeeName}}</b></label>
 				          	</div>
 				          	<div class="col s3" style="margin: 0px; padding: 0px">
-				          		<button class="waves-effect waves-light btn" style="padding: 0px; width: 120px" ng-click="approveLeave()">Approve</button>
+				          		<button class="waves-effect waves-light btn" style="padding: 0px; width: 120px" ng-click="approveLeave(leave)">Approve</button>
 				          	</div>
 				          
 				          	<div class="col s3" style="margin: 0px; padding: 0px">
-				          		<button class="waves-effect waves-light btn" ng-click="denyLeave()">Decline</button>
+				          		<button class="waves-effect waves-light btn" ng-click="denyLeave(leave)">Decline</button>
 				          	</div>	
 				          </div>
 				        </div>
@@ -78,13 +78,14 @@
 	         		<b>Add Holiday</b>
 	         	</div>
 				<div class="card-content">
-					<label for="End Date">Date</label>
-					<input type="date" class="datepicker"/>
+					<label for="Date">Date</label>
+				    <input input-date id="Date" type="text" class="datepicker" 
+				           ng-model="holidayDate"/>
 					<div class="input-field">
-		              <input id="Occassion" type="text" class="validate">
+		              <input id="Occassion" type="text" class="validate" ng-model="holidayOccassion">
 		              <label for="Occassion">Occassion</label>
 		            </div>  
-		              <button class="waves-effect waves-light btn">Submit</button>	
+		            <button class="waves-effect waves-light btn" ng-click="addHoliday()">Submit</button>	
 				</div>
 			</div>
 		</div>	

@@ -26,8 +26,9 @@ router.use(bodyParser());
 router.use(bodyParser.urlencoded({ extended: false }));
 
 router.post('/requestLeave',function(req,res){
-	var start = new Date(req.body.startDate);
-	var end = new Date(req.body.endDate);
+	console.log();
+	var start = new Date(new Date(req.body.startDate).getTime() + 5.5*60*60*1000);
+	var end = new Date(new Date(req.body.endDate).getTime() + 5.5*60*60*1000);
 	var year = start.getFullYear();
 	var employeeId = req.body.employeeId;
 	var managerId = req.body.managerId;
@@ -60,18 +61,17 @@ router.post('/requestLeave',function(req,res){
 		manager: managerId
 	});
 
-	console.log(mongoose.Types.ObjectId(managerId));
-
 	var promise = leave.save();
 
 	promise.then(function(leave){
+		res.json(leave);
+
 		var promise1 = managerSchema.findById(mongoose.Types.ObjectId(managerId));
 		promise1.then(function(manager){
 			manager.pendingLeaves.push(leave);
 			return manager.save();		
 		})
 		.then(function(manager){
-			console.log(manager);
 		})
 		.catch(function(err){
 			console.log('error in updating manager in leave request: '+err);
@@ -83,11 +83,11 @@ router.post('/requestLeave',function(req,res){
 			return employee.save();		
 		})
 		.then(function(employee){
-			console.log(employee);
 		})
 		.catch(function(err){
 			console.log('error in updating employee in leave request: '+err);
 		});
+
 	})
 	.catch(function(err){
 		console.log('error in saving leave: '+err);

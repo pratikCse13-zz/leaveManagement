@@ -4,21 +4,26 @@
 	<title></title>
   
   <!-- Materialize CSS CDN -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+  
+  <!-- CSS File -->
+  <link rel="stylesheet" href="/stylesheets/stylesheet.css"/>
+   
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body ng-app="leaveApp" style="height: 100%">
+  	<div ui-view style="height: 100%;"> 
+    </div>
 
   <!-- jQuery CDN -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
   <!-- Angular CDN -->
-  <script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
-  
-  <!-- Materialize JavaScript CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+  <script src="/bower_components/angular/angular.min.js"></script>
 
-  <!-- CSS File -->
-  <link rel="stylesheet" href="/stylesheets/stylesheet.css"/>
- 
-  
+  <!-- Materialize JavaScript CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+          
   <!-- Angular router CDN -->
   <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script>
   
@@ -31,12 +36,14 @@
   <!-- Angular file -->
   <script src="/javascript/controller.js"></script>
 
+  <!-- angular materialize datepicker -->
   <script src="/bower_components/angular-materializecss-datepicker/angular-materializecss-datepicker.min.js"></script>
 
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-</head>
-<body ng-app="leaveApp" style="height: 100%">
-  	<div ui-view style="height: 100%;"> 
-    </div> 
+  <!-- angular materialize cdn-->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-materialize/0.2.1/angular-materialize.min.js"></script>
+
+  <!-- momentjs -->
+  <script src="/bower_components/moment/moment.js"></script>
+
 </body>
 </html>
